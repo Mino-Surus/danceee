@@ -1,9 +1,7 @@
 from rest_framework.routers import DefaultRouter
-from .views import DancebandViewSet, DancerViewSet
+from .views import NumberViewSet
 
 router = DefaultRouter()
-router.register('danceband', DancebandViewSet)
-router.register('dancer', DancerViewSet)
-
+router.register('numbers', NumberViewSet)
 
 urlpatterns = router.get_urls()

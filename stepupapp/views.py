@@ -1,20 +1,21 @@
 from django.shortcuts import render
-from .models import Danceband, Dancer
+from .models import Number
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response 
-from .serializers import DancebandSerializers, DancerSerialisers
+from .serializers import NumberSerializers
 from rest_framework.decorators import action
-class DancebandViewSet(ModelViewSet):
-    queryset = Danceband.objects.all()
-    serializer_class = DancebandSerializers
+import random
 
-    @action(methods=['GET'], detail=False, url_path='usa')
-    def usa_dancebands_list(self, request):
-        queryset = self.get_queryset().filter(country='USA')    
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-class DancerViewSet(ModelViewSet):
-    queryset = Dancer.objects.all()
-    serializer_class = DancerSerialisers
+class NumberViewSet(ModelViewSet):
+    queryset = Number.objects.all()
+    serializer_class = NumberSerializers
+
+    @action(methods=['GET'], detail=False, url_path='random')
+    def random_number(self, request):
+        min_value = int(request.GET.get('min', 0))
+        max_value = int(request.GET.get('max', 100))
+        number = random.randint(min_value, max_value)
+        return Response({'number': number})
+
 
 
